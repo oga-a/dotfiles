@@ -1,0 +1,352 @@
+#!/bin/sh
+
+# Rust
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+. "$HOME/.cargo/env"
+
+{{ if eq .chezmoi.os "darwin" -}}
+
+# pyenv
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+pyenv install 3.10.5
+pyenv global 3.10.5
+pyenv rehash
+
+# nodenv
+brew install nodenv
+eval "$(nodenv init -)"
+nodenv install 16.16.0
+nodenv global 16.16.0
+nodenv rehash
+npm i -g yarn
+nodenv rehash
+
+# rbenv
+brew install rbenv
+eval "$(rbenv init -)"
+rbenv install 3.1.2
+rbenv global 3.1.2
+rbenv rehash
+
+# sheldon
+brew install sheldon
+
+# starship
+brew install starship
+
+# github CLI
+brew install gh
+
+# peco
+brew install peco
+
+# exa
+brew install exa
+
+# bat
+brew install bat
+
+# procs
+brew install procs
+
+# tumx
+brew install tmux
+
+# .NET SDK
+brew install --cask dotnet-sdk
+
+{{ else if eq .chezmoi.os "linux" -}}
+
+{{   if ne (env "REMOTE_CONTAINERS") "true" }}
+# pyenv
+git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+pyenv install 3.10.5
+pyenv global 3.10.5
+pyenv rehash
+
+# nodenv
+git clone https://github.com/nodenv/nodenv.git ~/.nodenv
+git clone https://github.com/nodenv/node-build.git ~/.nodenv/plugins/node-build
+export PATH="$HOME/.nodenv/bin:$PATH"
+eval "$(nodenv init -)"
+nodenv install 16.16.0
+nodenv global 16.16.0
+nodenv rehash
+npm i -g yarn
+nodenv rehash
+
+# rbenv
+git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
+git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+rbenv install 3.1.2
+rbenv global 3.1.2
+rbenv rehash
+{{   end }}
+
+# sheldon
+cargo install sheldon
+
+# starship
+cargo install starship
+
+# exa
+cargo install exa
+
+# bat
+cargo install bat
+
+# procs
+cargo install procs
+
+# fd
+cargo install fd-find
+
+# ripgrep
+cargo install ripgrep
+
+{{   if eq .chezmoi.osRelease.id "alpine" }}
+# github CLI
+apk add github-cli
+
+# tmux
+apk add tmux
+
+{{   else if eq .chezmoi.osRelease.id "ubuntu" }}
+# github CLI
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+sudo apt update
+sudo apt install -y gh
+
+# peco
+sudo apt install -y peco
+
+{{     if ne (env "REMOTE_CONTAINERS") "true" }}
+{{       if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+# tmux
+sudo apt update
+sudo apt install -y git automake bison build-essential pkg-config libevent-dev libncurses5-dev
+sudo git clone https://github.com/tmux/tmux /usr/local/src/tmux
+cd /usr/local/src/tmux
+sudo ./autogen.sh
+sudo ./configure --prefix=/usr/local
+sudo make
+sudo make install
+
+# Japanese environment
+wget -q https://www.ubuntulinux.jp/ubuntu-ja-archive-keyring.gpg -O- | sudo apt-key add -
+wget -q https://www.ubuntulinux.jp/ubuntu-jp-ppa-keyring.gpg -O- | sudo apt-key add -
+sudo wget https://www.ubuntulinux.jp/sources.list.d/focal.list -O /etc/apt/sources.list.d/ubuntu-ja.list
+sudo apt update
+sudo apt -y install ubuntu-defaults-ja
+sudo apt -y install manpages-ja manpages-ja-dev
+
+# fonts
+cat << EOS | sudo tee /etc/fonts/local.conf
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig><dir>/mnt/c/Windows/Fonts</dir></fontconfig>
+EOS
+
+# us-keyboard
+sudo apt update
+sudo apt install -y x11-xkb-utils
+setxkbmap -layout us
+
+# fcitx
+sudo apt update
+sudo apt install -y fcitx fcitx-mozc dbus-x11
+sudo apt -y purge ibus
+sudo sh -c "dbus-uuidgen > /var/lib/dbus/machine-id"
+sudo update-locale LANG=ja_JP.UTF8
+im-config -n fcitx
+{{       else }}
+
+# tmux
+sudo apt update
+sudo apt install -y git automake bison build-essential pkg-config libevent-dev libncurses5-dev
+sudo git clone https://github.com/tmux/tmux /usr/local/src/tmux
+cd /usr/local/src/tmux
+sudo ./autogen.sh
+sudo ./configure --prefix=/usr/local
+sudo make
+sudo make install
+
+{{       end }}
+{{     else }}
+
+# tmux
+sudo apt install -y tmux
+
+{{     end }}
+
+# package update
+sudo apt upgrade -y
+
+{{   else if eq .chezmoi.osRelease.id "debian" }}
+# github CLI
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+sudo apt update
+sudo apt install -y gh
+
+# peco
+sudo apt install -y peco
+
+{{     if ne (env "REMOTE_CONTAINERS") "true" }}
+{{       if (.chezmoi.kernel.osrelease | lower | contains "microsoft") }}
+# tmux
+sudo apt update
+sudo apt install -y git automake bison build-essential pkg-config libevent-dev libncurses5-dev
+sudo git clone https://github.com/tmux/tmux /usr/local/src/tmux
+cd /usr/local/src/tmux
+sudo ./autogen.sh
+sudo ./configure --prefix=/usr/local
+sudo make
+sudo make install
+
+# Japanese environment
+sudo apt update
+sudo apt -y install task-japanese locales-all task-japanese-desktop
+localectl set-locale LANG=ja_JP.UTF-8 LANGUAGE="ja_JP:ja"
+. /etc/default/locale
+
+# fonts
+cat << EOS | sudo tee /etc/fonts/local.conf
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig><dir>/mnt/c/Windows/Fonts</dir></fontconfig>
+EOS
+
+# us-keyboard
+sudo apt update
+sudo apt install -y x11-xkb-utils
+setxkbmap -layout us
+
+# fcitx
+sudo apt update
+sudo apt install -y fcitx fcitx-mozc dbus-x11
+sudo apt -y purge ibus
+sudo sh -c "dbus-uuidgen > /var/lib/dbus/machine-id"
+sudo update-locale LANG=ja_JP.UTF8
+im-config -n fcitx
+{{       else }}
+
+# tmux
+sudo apt update
+sudo apt install -y git automake bison build-essential pkg-config libevent-dev libncurses5-dev
+sudo git clone https://github.com/tmux/tmux /usr/local/src/tmux
+cd /usr/local/src/tmux
+sudo ./autogen.sh
+sudo ./configure --prefix=/usr/local
+sudo make
+sudo make install
+
+{{       end }}
+{{     else }}
+
+# tmux
+sudo apt install -y tmux
+
+{{     end }}
+
+# package update
+sudo apt upgrade -y
+
+{{   else if eq .chezmoi.osRelease.id "fedora" }}
+# github CLI
+sudo dnf -y install 'dnf-command(config-manager)'
+sudo dnf -y config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+sudo dnf -y install gh
+
+# tmux
+sudo dnf -y install tmux
+
+# package update
+sudo dnf -y upgrade
+
+{{   else if eq .chezmoi.osRelease.id "centos" }}
+# github CLI
+sudo dnf -y install 'dnf-command(config-manager)'
+sudo dnf -y config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+sudo dnf -y install gh
+
+# package update
+sudo dnf -y upgrade
+
+# tmux
+sudo dnf -y install tmux
+
+{{   else if eq .chezmoi.osRelease.id "miraclelinux" }}
+# github CLI
+sudo dnf -y install 'dnf-command(config-manager)'
+sudo dnf -y config-manager --add-repo https://cli.github.com/packages/rpm/gh-cli.repo
+sudo dnf -y install gh
+
+# tmux
+sudo dnf -y install tmux
+
+# package update
+sudo dnf -y upgrade
+
+{{   else if eq .chezmoi.osRelease.id "opensuse" }}
+# github CLI
+sudo zypper --non-interactive addrepo https://cli.github.com/packages/rpm/gh-cli.repo
+sudo zypper --non-interactive ref
+sudo zypper --non-interactive install gh
+
+# tmux
+sudo zypper --non-interactive install tmux
+
+# package update
+sudo zypper --non-interactive up
+
+{{   else if eq .chezmoi.osRelease.id "opensuse-leap" }}
+# github CLI
+sudo zypper --non-interactive addrepo https://cli.github.com/packages/rpm/gh-cli.repo
+sudo zypper --non-interactive ref
+sudo zypper --non-interactive install gh
+
+# tmux
+sudo zypper --non-interactive install tmux
+
+# package update
+sudo zypper --non-interactive up 
+{{   end }}
+
+# OS Info
+if [[ -f /etc/os-release ]]; then
+  . /usr/lib/os-release
+  case $ID in
+    debian ) echo "The Linux distribution for this environment is Debian.";;
+    ubuntu ) echo "The Linux distribution for this environment is Ubuntu.";;
+    fedora ) echo "The Linux distribution for this environment is Fedora.";;
+    centos ) echo "The Linux distribution for this environment is CentOS.";;
+    miraclelinux ) echo "The Linux distribution for this environment is MIRACLE LINUX.";;
+    opensuse ) echo "The Linux distribution for this environment is openSUSE.";;
+    alpine ) echo "The Linux distribution for this environment is Alpine.";;
+    *) echo "Linux distributions in this environment are not supported.";;
+  esac
+else
+    echo "There is no /etc/os-release in this environment; it may not be Linux."
+fi
+
+{{ end }}
+
+{{ if ne (env "REMOTE_CONTAINERS") "true" }}
+# poetry
+curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+
+# asdf-direnv
+asdf plugin-add direnv
+asdf direnv setup --shell bash --version latest
+
+# completed
+echo "Setup is completed!!"
+{{ end }}

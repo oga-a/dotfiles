@@ -1,0 +1,96 @@
+[user]
+    name = Oga Akihiro
+    email = 5.11.moc.liamg+other@gmail.com
+[github]
+    user = oga-a
+	# token = token
+[init]
+	defaultBranch = main
+[core]
+    editor = vim -c \"set fenc=utf-8\"
+    filemode = false
+    quotepath = false
+[color]
+    ui = true
+[branch]
+    autosetuprebase = always
+[push]
+    # default = simple
+    default = current
+[credential]
+    helper = 'cache --timeout=86400'
+[http]
+    proxy =
+    sslverify = false
+[https]
+    proxy =
+[web]
+	browser = google-chrome
+# [filter "lfs"]
+# 	clean = git-lfs clean -- %f
+# 	smudge = git-lfs smudge -- %f
+# 	process = git-lfs filter-process
+# 	required = true
+[alias]
+    # Original Settings
+    ad = add .
+    cm = commit -m
+    acm = !"git ad && git cm"
+    iacm = !"git init && git ad && git commit -m 'initial commit'"
+
+    pl = pull
+    ps = push
+    cl = clone
+
+    br = branch
+    bra = branch -a
+    co = checkout
+    cob = checkout -b
+    com = checkout master
+    cod = checkout develop
+
+    rsh = reset --soft HEAD~
+
+    # git flow
+    fid = flow init -d
+    ff = flow feature
+    ffs = ff start
+    ffp = ff publish
+    fff = ff finish
+
+
+    # https://dev.classmethod.jp/articles/git-config-alias-19/
+    ss = status
+    brm = branch -m
+    brd = branch -d
+    # brdd = branch -D
+    # adu = add -u
+    # adup = add -u -p
+    # mg = merge --no-ff
+    # mgff = merge --ff
+    # cp = cherry-pick
+    # log1 = log -1
+    # log2 = log -2
+    # log3 = log -3
+    # logo = log --oneline
+    # logn = log --name-status --oneline
+    # firstcom = commit --allow-empty -m \"Initial commit\"
+
+    # https://github.com/patrick-kidger/gitconfig/blob/master/.gitconfig
+    conf = config --global --edit  # Opens this config file!
+
+    # Original Settings
+    arh = archive HEAD --format=zip -o arc.zip
+    ardh = "!f(){ git archive HEAD $(git diff --name-only HEAD~$1 HEAD --diff-filter=ACMR) --format=zip -o arc.zip;};f"
+    aruz = !"unzip -o arc.zip && rm arc.zip"
+
+    df = diff
+    dfn = diff --name-only  # Show only file differences
+    dfp = !"git diff $(git rev-parse @~) $(git rev-parse @)"
+    dfnp = !"git diff $(git rev-parse @~) $(git rev-parse @) --name-only"
+    lgg = log --graph
+    lggs = log --graph --date=short --decorate=short --pretty=format:'%Cgreen%h %Creset%cd %Cblue%cn %Cred%d %Creset%s'
+
+    # このあたりを参考にして追加していきたい
+    # https://gist.github.com/johnpolacek/69604a1f6861129ef088
+    # https://qiita.com/peccul/items/90dd469e2f72babbc106
