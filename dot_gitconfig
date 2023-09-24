@@ -25,8 +25,8 @@
     sslverify = false
 [https]
     proxy =
-[url "git@github.com:"]
-    insteadOf = https://github.com/
+# [url "git@github.com:"]
+#     insteadOf = https://github.com/
 [web]
 	browser = google-chrome
 # [filter "lfs"]
