@@ -32,6 +32,6 @@ export PATH=$HOME/go/bin:$PATH
 # chezmoi
 git clone https://github.com/twpayne/chezmoi.git ~/chezmoi
 cd ~/chezmoi
-make install
+sudo make install
 
 chezmoi init https://github.com/oga-a/dotfiles.git
