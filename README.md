@@ -4,11 +4,16 @@ My dotfiles.
 
 ## How to install
 
-### macOS
+### Manual (Install with cloning)
 
 ```zsh
-brew install chezmoi
-chezmoi init --apply oga-a
+sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply oga-a
+```
+
+If you want to apply only dotfiles, then
+
+```zsh
+sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply oga-a --exclude scripts
 ```
 
 ### Visual Studio Code Remote - Containers
@@ -34,22 +39,8 @@ To save disk space, use [`--one-shot`](https://www.chezmoi.io/reference/commands
 RUN sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply --one-shot oga-a
 ```
 
-### Manual (Install with cloning)
+If you want to use only script files, (i.e. when dotfiles are not needed)
 
-```zsh
-sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply oga-a
-```
-
-### Manual (Install after cloning)
-Using the [`-S`](https://www.chezmoi.io/reference/command-line-flags/global/#-s-source-directory) option, you can install from any location.
-
-```zsh
-git clone git@github.com:oga-a/dotfiles.git ~/dotfiles
-sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply -S ~/dotfiles
-```
-
-## How to update
-
-```zsh
-chezmoi update
+```dockerfile
+RUN sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply --one-shot oga-a --include scripts
 ```

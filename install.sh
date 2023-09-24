@@ -1,40 +1,17 @@
 #!/bin/sh
 
-# if [[ -f /etc/os-release ]]; then
-#   . /usr/lib/os-release
-#   case $ID in
-#     debian ) sudo apt update && sudo apt install -y zsh && sudo apt install -y build-essential libffi-dev libssl-dev zlib1g-dev liblzma-dev libbz2-dev libreadline-dev libsqlite3-dev libopencv-dev tk-dev git;;
-#     ubuntu ) sudo apt install -y software-properties-common && sudo add-apt-repository ppa:longsleep/golang-backports && sudo apt update && sudo apt install -y zsh && sudo apt install -y build-essential libffi-dev libssl-dev zlib1g-dev liblzma-dev libbz2-dev libreadline-dev libsqlite3-dev libopencv-dev tk-dev git;;
-#     fedora ) sudo dnf update && sudo dnf group install -y "Development Tools" && sudo dnf install -y wget tar zsh && sudo dnf install -y gcc zlib-devel bzip2 bzip2-devel readline readline-devel sqlite sqlite-devel openssl openssl-devel git libffi-devel tar make;;
-#     centos ) sudo dnf update && sudo dnf group install -y "Development Tools" && sudo dnf install -y wget tar zsh && sudo dnf install -y gcc zlib-devel bzip2 bzip2-devel readline readline-devel sqlite sqlite-devel openssl openssl-devel git libffi-devel tar make;;
-#     miraclelinux ) sudo dnf update && sudo dnf group install -y "Development Tools" && sudo dnf install -y wget tar zsh && sudo dnf install -y gcc zlib-devel bzip2 bzip2-devel readline readline-devel sqlite sqlite-devel openssl openssl-devel git libffi-devel tar make;;
-#     opensuse ) sudo zypper --non-interactive install zsh && sudo zypper --non-interactive install --type pattern devel_basis && sudo zypper --non-interactive install vim-data gcc automake bzip2 libbz2-devel xz xz-devel openssl-devel ncurses-devel readline-devel zlib-devel tk-devel libffi-devel sqlite3-devel go go-doc go-vim subversion mercurial mercurial-lang git;;
-#     opensuse-leap ) sudo zypper --non-interactive install zsh && sudo zypper --non-interactive install --type pattern devel_basis && sudo zypper --non-interactive install vim-data gcc automake bzip2 libbz2-devel xz xz-devel openssl-devel ncurses-devel readline-devel zlib-devel tk-devel libffi-devel sqlite3-devel go go-doc go-vim subversion mercurial mercurial-lang git;;
-#     alpine ) apk add --update-cache --no-cache git bash build-base libffi-dev openssl-dev bzip2-dev zlib-dev xz-dev readline-dev sqlite-dev tk-dev zsh tar wget;;
-#   esac
-# fi
+set -e # -e: exit on error
 
-# # zsh-defer
-# git clone https://github.com/romkatv/zsh-defer.git ~/zsh-defer
+GITHUB_USERNAME="oga-a"
 
-# # golang
-# if [[ -f /etc/os-release ]]; then
-#   . /usr/lib/os-release
-#   case $ID in
-#     alpine ) apk add --update-cache --no-cache vim git make musl-dev go curl;;
-#     * ) curl -Lo go_installer https://get.golang.org/linux && chmod +x go_installer && ./go_installer && rm go_installer;;
-#   esac
-# fi
-# export PATH=$HOME/.go/bin:$PATH
-# export GOPATH=$HOME/go
-# export PATH=$HOME/go/bin:$PATH
+if [ "$(command -v curl)" ]; then
+  sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply $GITHUB_USERNAME --exclude scripts
+elif [ "$(command -v wget)" ]; then
+  sh -c "$(wget -qO- chezmoi.io/get)" -- init --apply $GITHUB_USERNAME --exclude scripts
+else
+  echo "To apply dotfiles, you must have curl or wget installed." >&2
+  exit 1
+fi
 
-# # chezmoi
-# git clone https://github.com/twpayne/chezmoi.git ~/chezmoi
-# cd ~/chezmoi
-# sudo make install
-
-# chezmoi init https://github.com/oga-a/dotfiles.git
-
-# chezmoi apply
-sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply oga-a --exclude scripts
+# sh -c "$(curl -fsLS chezmoi.io/get)" -- init oga-a
+# sh -c "$(curl -fsLS chezmoi.io/get)" -- apply --exclude scripts

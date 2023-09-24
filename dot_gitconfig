@@ -10,6 +10,7 @@
     editor = vim -c \"set fenc=utf-8\"
     filemode = false
     quotepath = false
+	# excludesFile = ~/.gitignore_global
 [color]
     ui = true
 [branch]
@@ -24,6 +25,8 @@
     sslverify = false
 [https]
     proxy =
+[url "git@github.com:"]
+    insteadOf = https://github.com/
 [web]
 	browser = google-chrome
 # [filter "lfs"]
