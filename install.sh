@@ -16,4 +16,5 @@ fi
 # sh -c "$(curl -fsLS chezmoi.io/get)" -- init oga-a
 # sh -c "$(curl -fsLS chezmoi.io/get)" -- apply --exclude scripts
 
-echo '\n. ~/.bash_aliases' >> ~/.bashrc
+echo '' >> ~/.bashrc
+echo '. ~/.bash_aliases' >> ~/.bashrc
