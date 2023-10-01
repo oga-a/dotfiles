@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # common
-# 確認不要のときだけ-fをつける
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
-alias cd.='cd ./'
-alias cd..='cd ../'
-alias cd...='cd ../../'
+# 確認不要のときだけ-fをつける
 alias cp='cp -i'
 alias mv='mv -i'
 alias rm='rm -i'
+alias cd.='cd ./'
+alias cd..='cd ../'
+alias cd...='cd ../../'
 
 # common
 alias e='exit'
