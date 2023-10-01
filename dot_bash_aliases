@@ -19,7 +19,7 @@ alias mk='make'
 # alias src='source ~/.bashrc'
 alias unzipj='unzip -O sjis'
 alias unsetproxy='unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY'
-alias cdots='code ~/.bash_aliases ~/.bashrc_supplement ~/.gitconfig'
+alias cdots='code ~/.env_global ~/.bash_aliases ~/.gitconfig'
 
 # python
 alias python='python3'
