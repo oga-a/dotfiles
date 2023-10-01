@@ -17,4 +17,4 @@ fi
 # sh -c "$(curl -fsLS chezmoi.io/get)" -- apply --exclude scripts
 
 echo '' >> ~/.bashrc
-echo '. ~/.bash_aliases' >> ~/.bashrc
+echo '. ~/.bashrc_supplement' >> ~/.bashrc
