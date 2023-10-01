@@ -1,16 +1,5 @@
 #!/bin/bash
 
-# MEMO: alias追加
-# --set--upstream 必要か判断したい
-# remotes/origin/
-# git push --set-upstream origin $(git rev-parse --abbrev-ref HEAD)
-
-# alias drmiu='drmi && du' これはerrorが起こるので、duまで行かない、修正したい
-# git stash系
-# git reset?
-# git checkout issue対応
-
-
 # common
 # 確認不要のときだけ-fをつける
 alias ll='ls -alF'
@@ -30,43 +19,7 @@ alias mk='make'
 # alias src='source ~/.bashrc'
 alias unzipj='unzip -O sjis'
 alias unsetproxy='unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY'
-alias cdots='code ~/.alias.sh ~/.bashrc_add.sh ~/.gitconfig'
-
-# zipgit
-# alias zgit="git archive HEAD --format=zip -o sample.zip"
-# alias zdgit='git archive HEAD `git diff --name-only HEAD~3 HEAD --diff-filter=ACMR` --format=zip -o sample.zip'
-# alias uzgit="unzip -o sample.zip && rm sample.zip"
-# BACKUP_ZIP_PATH="./.vscode/oga/"
-# BACKUP_ZIP_FILE_NAME="sample.zip"
-# BACKUP_ZIP_FILE_NAME_DL="sample.zip"
-# BACKUP_ZIP_PASSWORD="roughpath"
-# alias zgit="mkdir -p ${BACKUP_ZIP_PATH} && \
-# rm -f ${BACKUP_ZIP_PATH}${BACKUP_ZIP_FILE_NAME} && \
-# git archive --format=zip HEAD -o .backup_git.pkl && \
-# zip -P ${BACKUP_ZIP_PASSWORD} .backup_git.zip .backup_git.pkl && \
-# rm .backup_git.pkl && \
-# mv ./.backup_git.zip ${BACKUP_ZIP_PATH}${BACKUP_ZIP_FILE_NAME}"
-# alias uzgit="mkdir -p ${BACKUP_ZIP_PATH} && \
-# rm -rf ${BACKUP_ZIP_PATH}backup`date "+%Y%m%d"` && \
-# mkdir ${BACKUP_ZIP_PATH}backup`date "+%Y%m%d"` && \
-# find ./ -not -path './' \
-# -not -path './.git' -not -path './.git/*' \
-# -not -path '${BACKUP_ZIP_PATH}' \
-# -not -path '${BACKUP_ZIP_PATH}*' \
-# -not -path './mlruns' \
-# -not -path './mlruns/*' \
-# -not -path './tmp' \
-# -not -path './tmp/*' \
-# -not -name '${BACKUP_ZIP_FILE_NAME_DL}' \
-# | xargs -I '{}' mv {} ${BACKUP_ZIP_PATH}backup`date "+%Y%m%d"`/ ; \
-# unzip -P ${BACKUP_ZIP_PASSWORD} ${BACKUP_ZIP_FILE_NAME_DL} && \
-# unzip -o .backup_git.pkl && \
-# rm .backup_git.pkl && \
-# rm ${BACKUP_ZIP_FILE_NAME_DL}"
-# unset BACKUP_ZIP_PATH
-# unset BACKUP_ZIP_FILE_NAME
-# unset BACKUP_ZIP_FILE_NAME_DL
-# unset BACKUP_ZIP_PASSWORD
+alias cdots='code ~/.bash_aliases.sh ~/.bashrc_supplement.sh ~/.gitconfig'
 
 # python
 alias python='python3'
@@ -78,8 +31,8 @@ alias jl='jupyter lab'
 alias srun='streamlit run'
 # alias mfsv="mlflow server --backend-store-uri sqlite:////home/oga/.mlflow/mlflow.sqlite --default-artifact-root file:/home/oga/.mlflow/mlruns --host localhost --port 5000"
 # alias mfrm="rm -r /home/oga/.mlflow; mkdir /home/oga/.mlflow"
-# alias mfui="mlflow ui --backend-store-uri ./data/90_mlruns"
-# alias opdb="optuna-dashboard sqlite:///./data/91_optuna.sqlite --port 5001"
+# alias mfui="mlflow ui --backend-store-uri ./data/mlruns"
+# alias opdb="optuna-dashboard sqlite:///./data/optuna.sqlite --port 5001"
 
 # docker
 alias du='docker compose up -d'
@@ -87,66 +40,5 @@ alias dd='docker compose down'
 alias ddu='dd && du'
 # alias dps="docker ps -a && echo '' && docker images -a"
 # alias drmi="dd && docker rmi $(docker images -a -q)"
-# alias drmiu="drmi && du"
-
+# alias drmiu='drmi && du' これはerrorが起こるので、duまで行かない、修正したい
 # docker container prune -f & docker image prune -a -f & docker volume prune -f & docker network prune -f
-
-
-
-# AWS
-
-# JSON_EC2=$(aws ec2 describe-instances)
-# echo $JSON_EC2 | jq .Reservations[0].Instances[0].InstanceId
-# echo $JSON_EC2 | jq .Reservations[0].Instances[0].PublicDnsName
-
-# alias ec2id='f() {
-#   if [ $1 == "avilen" ]
-#   then
-#     echo "i-0356c2870858311a4"
-#   else
-#     echo $1
-#     # EOF
-#     # exit 1
-#   fi
-# }; f'
-
-# alias ec2st='f() {
-#   while [ $(aws ec2 start-instances --instance-ids $(ec2id $1) | jq .StartingInstances[0].CurrentState.Code) != 16 ]
-#   do
-#     sleep 5
-#   done
-#   sleep 5
-#   ssh $1
-# }; f'
-
-# alias ec2sp='f() {
-#   while [ $(aws ec2 stop-instances --instance-ids $(ec2id $1) | jq .StoppingInstances[0].CurrentState.Code) != 80 ]
-#   do
-#     sleep 5
-#   done
-# }; f'
-
-# alias ec2spt='f() {
-#   ec2sp $1
-#   echo stopped
-#   ec2st $1
-# }; f'
-
-# # avilen instance
-# alias avi="ssh avilen"
-# alias avist="ec2st avilen"
-# alias avisp="ec2sp avilen"
-# alias avispt="ec2spt avilen"
-
-
-# # oga-main instance
-# alias ec2m="ssh oga-main"
-# alias ec2stm="ec2st oga-main"
-# alias ec2spm="ec2sp oga-main"
-# alias ec2sptm="ec2spt oga-main"
-
-# # it-qdt-team1 instance
-# alias ec2c="ssh it-qdt-team1"
-# alias ec2stc="ec2st it-qdt-team1"
-# alias ec2spc="ec2sp it-qdt-team1"
-# alias ec2sptc="ec2spt it-qdt-team1"

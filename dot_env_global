@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# proxy setting
+# export HTTP_PROXY=
+# export NO_PROXY='localhost,127.0.0.1'
+
+# export http_proxy=$HTTP_PROXY
+# export https_proxy=$HTTP_PROXY
+# export HTTP_PROXY=$HTTP_PROXY
+# export HTTPS_PROXY=$HTTP_PROXY
+# export no_proxy=$NO_PROXY
+# export NO_PROXY=$NO_PROXY
+
+
+# API_key
