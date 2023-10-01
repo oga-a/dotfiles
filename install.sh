@@ -2,12 +2,12 @@
 
 set -e # -e: exit on error
 
-GITHUB_USERNAME="oga-a"
+GITHUB_USER="oga-a"
 
 if [ "$(command -v curl)" ]; then
-  sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply $GITHUB_USERNAME --exclude scripts
+  sh -c "$(curl -fsLS chezmoi.io/get)" -- init --apply $GITHUB_USER --exclude scripts
 elif [ "$(command -v wget)" ]; then
-  sh -c "$(wget -qO- chezmoi.io/get)" -- init --apply $GITHUB_USERNAME --exclude scripts
+  sh -c "$(wget -qO- chezmoi.io/get)" -- init --apply $GITHUB_USER --exclude scripts
 else
   echo "To apply dotfiles, you must have curl or wget installed." >&2
   exit 1
