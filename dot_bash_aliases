@@ -13,6 +13,7 @@ alias cd..='cd ../'
 alias cd...='cd ../../'
 
 # common
+alias c='code'
 alias e='exit'
 alias g='git'
 alias mk='make'
