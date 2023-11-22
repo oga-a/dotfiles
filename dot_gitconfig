@@ -44,15 +44,21 @@
     pl = pull
     ps = push
     cl = clone
+    m = merge
 
     br = branch
     bra = branch -a
+    brd = branch -d
+    brdd = branch -D
     co = checkout
     cob = checkout -b
-    com = checkout master
-    cod = checkout develop
+    com = !"git checkout master && git pull origin master"
+    cod = !"git checkout develop && git pull origin develop"
 
     rsh = reset --soft HEAD~
+
+    ps-st = push staging develop:master
+    ps-pd = push prod master:master
 
     # git flow
     fid = flow init -d
@@ -65,8 +71,6 @@
     # https://dev.classmethod.jp/articles/git-config-alias-19/
     ss = status
     brm = branch -m
-    brd = branch -d
-    # brdd = branch -D
     # adu = add -u
     # adup = add -u -p
     # mg = merge --no-ff
