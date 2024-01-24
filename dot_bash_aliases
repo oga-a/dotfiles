@@ -34,6 +34,7 @@ alias pfg='pip freeze | grep'
 alias jn='jupyter notebook'
 alias jl='jupyter lab'
 alias srun='streamlit run'
+alias uviapp='uvicorn main:app --reload'
 # alias mfsv="mlflow server --backend-store-uri sqlite:////home/oga/.mlflow/mlflow.sqlite --default-artifact-root file:/home/oga/.mlflow/mlruns --host localhost --port 5000"
 # alias mfrm="rm -r /home/oga/.mlflow; mkdir /home/oga/.mlflow"
 # alias mfui="mlflow ui --backend-store-uri ./data/mlruns"
