@@ -87,9 +87,9 @@
     conf = config --global --edit  # Opens this config file!
 
     # Original Settings
-    arh = archive HEAD --format=zip -o arc.zip
-    ardh = "!f(){ git archive HEAD $(git diff --name-only HEAD~$1 HEAD --diff-filter=ACMR) --format=zip -o arc.zip;};f"
-    aruz = !"unzip -o arc.zip && rm arc.zip"
+    arh = !"git archive HEAD --format=zip -o arc_$(basename $(pwd)).zip"
+    ardh = "!f(){ git archive HEAD $(git diff --name-only HEAD~$1 HEAD --diff-filter=ACMR) --format=zip -o arc_$(basename $(pwd)).zip;};f"
+    aruz = !"unzip -o arc_$(basename $(pwd)).zip && rm arc_$(basename $(pwd)).zip"
 
     df = diff
     dfn = diff --name-only  # Show only file differences
