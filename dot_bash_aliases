@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# common
+# [generic alias]
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
@@ -12,23 +12,31 @@ alias cd.='cd ./'
 alias cd..='cd ../'
 alias cd...='cd ../../'
 
-# common
+# [my alias]
 alias c='code'
 alias e='exit'
 alias g='git'
-alias md='mkdir -p'
+alias d='docker'
+alias mkd='mkdir -p'
 alias mk='make'
 alias c.='code .'
 # alias src='source ~/.bashrc'
 alias unzipj='unzip -O sjis'
+alias cbhg='cat ~/.bash_history | grep'
+alias dush='du -sh ./.[!.]*/ ./*/ ././ | sort -nr'
 alias unsetproxy='unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY'
 alias cdots='code ~/.env_global ~/.bash_aliases ~/.gitconfig'
+function mkdcd() {
+  command mkdir -p $1 && cd $1
+}
 
-# python
+# [python]
 alias python='python3'
 alias pip='pip3'
 alias pi='pip install'
 alias piu='pip install -U'
+alias pirr='pip install -r requirements.txt'
+alias pic='pip-compile'
 alias pui='pip uninstall -y'
 alias pfg='pip freeze | grep'
 alias jn='jupyter notebook'
@@ -40,11 +48,17 @@ alias uviapp='uvicorn main:app --reload'
 # alias mfui="mlflow ui --backend-store-uri ./data/mlruns"
 # alias opdb="optuna-dashboard sqlite:///./data/optuna.sqlite --port 5001"
 
-# docker
-alias du='docker compose up -d'
-alias dd='docker compose down'
-alias ddu='dd && du'
-# alias dps="docker ps -a && echo '' && docker images -a"
-# alias drmi="dd && docker rmi $(docker images -a -q)"
-# alias drmiu='drmi && du' これはerrorが起こるので、duまで行かない、修正したい
+# [docker compose]
+alias dc='docker compose'
+# alias dcps='docker compose ps'
+alias dcud='docker compose up -d'
+# alias dcudb='docker compose up -d --build'
+# alias dce='docker compose exec'
+# alias dcl='docker compose logs'
+alias dcd='docker compose down'
+# alias dcbnc='docker compose build --no-cache'
+alias dcdu='dcd && dcud'
+# alias dops="docker ps -a && echo '' && docker images -a"
+# alias dormi="dod && docker rmi $(docker images -a -q)"
+# alias dormiu='dormi && dou' これはerrorが起こるので、duまで行かない、修正したい
 # docker container prune -f & docker image prune -a -f & docker volume prune -f & docker network prune -f
